@@ -1,0 +1,23 @@
+
+docs_dir: "./.docs/templates"
+site_dir: "./.docs/output/"
+site_name: "Event Stream Processor"
+site_url: "http://localhost:8000"
+site_description: "Register functions to be passed events from a queue"
+
+nav:
+  - Introduction: 'index.md
+
+
+theme:
+  name: "material"
+
+plugins:
+  - mkdocstrings:
+      watch:
+        - event_stream_processor
+      handlers:
+        python:
+          setup_commands:
+            - import sys
+            - sys.path.append("event_stream_processor")
