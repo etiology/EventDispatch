@@ -4,8 +4,16 @@
 Register methods and functions to be called when a specific event is received
 
 """
+import inspect
 from collections import defaultdict
 from functools import wraps
+
+from loguru import logger
+
+from event_stream_processor.exceptions import (
+    EventProcessorUncaughtException,
+    BadProcessorRegistration,
+)
 
 
 class EventProcessorRegistry:
@@ -49,8 +57,8 @@ class EventProcessorRegistry:
     def __init__(self):
         self.event_processors = defaultdict(list)
 
-    def register_processor(self, event_type: str) -> callable:
-        """ A Decorator that registers a function to a specific event type
+    def register_async_processor(self, event_type: str) -> callable:
+        """A Decorator that registers an async function for specific even type
 
         The event stream consists of message that contain an 'EventType' identifier.  This
         decorator is used to ensure the function is passed these events when they occur in
@@ -62,14 +70,29 @@ class EventProcessorRegistry:
         Returns:
             callable
         """
+
         def decorated(fn):
+            BadProcessorRegistration.require_condition(
+                inspect.iscoroutinefunction(fn),
+                "registered callable needs to by a coroutine",
+            )
             self.event_processors[event_type].append(fn)
 
             @wraps(fn)
             def wrapper(*args, **kwargs):
                 return fn(*args, **kwargs)
+
             return wrapper
+
         return decorated
 
-    def process_event(self, event) -> None:
-        raise NotImplemented
+    async def async_process_event(self, event):
+        """ Run all processors registered to this type of event """
+        logger.info(f"Processing - {event}")
+        for processor_fn in self.event_processors[event.EventType]:
+
+            with EventProcessorUncaughtException.handle_errors(
+                f"{processor_fn.__name__} failed on {event}"
+            ):
+                logger.debug(f" - awaiting processor function: {processor_fn.__name__}")
+                await processor_fn(event)
