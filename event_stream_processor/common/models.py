@@ -13,7 +13,7 @@ def _current_utc_time():
 
 
 class Event(pydantic.BaseModel):
-    """ An example of an event that is shared on an event stream
+    """An example of an event that is shared on an event stream
 
     This model contains metadata fields and a payload field called
     `EventData`.  The payload field in this example can contain any
@@ -31,6 +31,7 @@ class Event(pydantic.BaseModel):
                             consumers information needed to act upon the event.
 
     """
+
     EventType: str
     EventID: UUID = Field(default_factory=uuid.uuid4)
     EventTimestampUTC: dt.datetime = Field(default_factory=_current_utc_time)

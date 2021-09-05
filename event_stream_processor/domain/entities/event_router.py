@@ -24,6 +24,7 @@ class EventRouter:
     assigned to that event type will be passed the event to process.
 
     Examples:
+        Assign events to functions using a decorator:
         ```python
 
         event_router = EventRouter()
@@ -47,12 +48,35 @@ class EventRouter:
         for event in event_stream.read():
             await event_router.async_process_event(event)
         ```
+
+        Assign events to a method of a class:
+        ```python
+
+        class MyEventHandler:
+            def __init__(self):
+                # ... perhaps this class needs to be
+                # initialized before handling events
+                ...
+
+            async def handle_event(self, event):
+                ...
+
+        my_handler = MyEventHandler(...)
+        event_router = EventRouter()
+
+        # Here we register the method that handles the 'ItemShipped' event
+        event_router.register_async_processor("ItemShipped", my_handler.handle_event)
+
+        ```
+
     """
 
     def __init__(self):
         self.event_processors = defaultdict(list)
 
-    def register_async_processor(self, event_type: str) -> callable:
+    def register_async_processor(
+        self, event_type: str, method: callable = None
+    ) -> callable:
         """A Decorator that registers an async function for specific even type
 
         The event stream consists of message that contain an 'EventType' identifier.  This
@@ -64,27 +88,34 @@ class EventRouter:
 
         Args:
             event_type: case-insensitive event_type that the decorated function will receive
+            method: (Optional) Used if the callable being registered is a method on a class
 
         Returns:
             callable
         """
 
-        def decorated(fn):
-            with BadProcessorRegistration.check_expressions("event processor") as check:
-                check(inspect.iscoroutinefunction(fn), "needs to be a coroutine"),
-                check(
-                    "event" in inspect.signature(fn).parameters,
-                    "needs to accept an 'event' as a parameter",
-                )
-            self.event_processors[event_type].append(fn)
+        if method:
+            self.event_processors[event_type].append(method)
+            return
+        else:
+            # when decorating a function
+            def decorated(fn):
+                @wraps(fn)
+                def wrapper(*args, **kwargs):
+                    return fn(*args, **kwargs)
 
-            @wraps(fn)
-            def wrapper(*args, **kwargs):
-                return fn(*args, **kwargs)
+                with BadProcessorRegistration.check_expressions(
+                    "event processor"
+                ) as check:
+                    check(inspect.iscoroutinefunction(fn), "needs to be a coroutine"),
+                    check(
+                        "event" in inspect.signature(fn).parameters,
+                        "needs to accept an 'event' as a parameter",
+                    )
+                self.event_processors[event_type].append(fn)
+                return wrapper
 
-            return wrapper
-
-        return decorated
+            return decorated
 
     async def async_process_event(self, event: Event, timeout: float = 2.0) -> None:
         """Run all processors registered to this type of event
