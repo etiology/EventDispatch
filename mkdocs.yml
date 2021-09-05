@@ -7,6 +7,7 @@ site_description: "Register functions to be passed events from a queue"
 
 nav:
   - Introduction: 'index.md'
+  - Registry: 'event_router.md'
 
 
 theme:
