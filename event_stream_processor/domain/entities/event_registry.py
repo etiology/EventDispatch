@@ -4,14 +4,15 @@
 Register methods and functions to be called when a specific event is received
 
 """
+import asyncio
 import inspect
 from collections import defaultdict
 from functools import wraps
 
 from loguru import logger
 
+from event_stream_processor.common.models import Event
 from event_stream_processor.exceptions import (
-    EventProcessorUncaughtException,
     BadProcessorRegistration,
 )
 
@@ -64,6 +65,9 @@ class EventProcessorRegistry:
         decorator is used to ensure the function is passed these events when they occur in
         the stream.
 
+        Notes:
+            An event processor function needs to accept an Event model as an argument
+
         Args:
             event_type: case-insensitive event_type that the decorated function will receive
 
@@ -72,10 +76,10 @@ class EventProcessorRegistry:
         """
 
         def decorated(fn):
-            BadProcessorRegistration.require_condition(
-                inspect.iscoroutinefunction(fn),
-                "registered callable needs to by a coroutine",
-            )
+
+            with BadProcessorRegistration.check_expressions("event processor") as check:
+                check(inspect.iscoroutinefunction(fn), "needs to be a coroutine"),
+                check('event' in inspect.signature(fn).parameters, "needs to accept an 'event' as a parameter")
             self.event_processors[event_type].append(fn)
 
             @wraps(fn)
@@ -86,13 +90,24 @@ class EventProcessorRegistry:
 
         return decorated
 
-    async def async_process_event(self, event):
-        """ Run all processors registered to this type of event """
-        logger.info(f"Processing - {event}")
-        for processor_fn in self.event_processors[event.EventType]:
+    async def async_process_event(self, event: Event, timeout=2.0) -> None:
+        """ Run all processors registered to this type of event
 
-            with EventProcessorUncaughtException.handle_errors(
-                f"{processor_fn.__name__} failed on {event}"
-            ):
-                logger.debug(f" - awaiting processor function: {processor_fn.__name__}")
-                await processor_fn(event)
+        Args:
+            event: The data to pass to the registered event processors
+            timeout: Maximum time an event processor is allowed to run before canceling it
+
+        Returns:
+            None
+        """
+        logger.info(f"Processing - {event}")
+        event_processing_coroutines = [
+            asyncio.wait_for(registered_processor(event), timeout=timeout)
+            for registered_processor in self.event_processors[event.EventType]
+        ]
+        results = await asyncio.gather(*event_processing_coroutines, return_exceptions=True)
+
+        err_results = [result for result in results if isinstance(result, Exception)]
+        if err_results:
+            logger.error(f"async_process_event - uncaught error from an event processor: {err_results}")
+
