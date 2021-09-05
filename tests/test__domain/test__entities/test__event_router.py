@@ -3,6 +3,7 @@ import pytest
 from event_stream_processor.common.models import Event
 from event_stream_processor.domain.entities.event_router import EventRouter
 from event_stream_processor.exceptions import BadProcessorRegistration
+from tests.support_factories.event_factory import EventFactory
 
 
 class TestEventRouter:
@@ -14,6 +15,7 @@ class TestEventRouter:
 
     def _register_example_fn_processor1(self, reg: EventRouter, event_type: str, err=None):
         """ adds a test event processor to the registry """
+
         @reg.register_async_processor(event_type)
         async def example_event_processor1(event: Event):
             self.example_processor1_was_called = True
@@ -22,6 +24,7 @@ class TestEventRouter:
 
     def _register_example_fn_processor2(self, reg: EventRouter, event_type: str, err=None):
         """ adds a test event processor to the registry """
+
         @reg.register_async_processor(event_type)
         async def example_event_processor2(event: Event):
             self.example_processor2_was_called = True
@@ -82,9 +85,7 @@ class TestEventRouter:
         self._register_example_fn_processor1(reg=reg, event_type='Foo')
         self._register_example_fn_processor2(reg=reg, event_type='Other')
         assert not any([self.example_processor1_was_called, self.example_processor2_was_called])
-        the_event = Event(
-            EventType='Foo'
-        )
+        the_event = EventFactory(EventType='Foo')
 
         # WHEN the registry processes the event
         await reg.async_process_event(the_event)
@@ -100,9 +101,7 @@ class TestEventRouter:
         self._register_example_fn_processor1(reg=reg, event_type='Foo')
         self._register_example_fn_processor2(reg=reg, event_type='Foo')
         assert not any([self.example_processor1_was_called, self.example_processor2_was_called])
-        the_event = Event(
-            EventType='Foo'
-        )
+        the_event = EventFactory(EventType='Foo')
 
         # WHEN the registry processes the event
         await reg.async_process_event(the_event)
@@ -124,6 +123,7 @@ class TestEventRouter:
                 self.method_called = True
 
         class Example1(Base): pass
+
         class Example2(Base): pass
 
         eg1 = Example1()
@@ -132,9 +132,7 @@ class TestEventRouter:
         reg.register_async_processor('Foo', eg2.process_event)
 
         assert not any([eg1.method_called])
-        the_event = Event(
-            EventType='Foo'
-        )
+        the_event = EventFactory(EventType='Foo')
 
         # WHEN the registry processes the event
         await reg.async_process_event(the_event)
@@ -149,9 +147,7 @@ class TestEventRouter:
         self._register_example_fn_processor1(reg=reg, event_type='Foo')
         self._register_example_fn_processor2(reg=reg, event_type='Foo', err=ValueError)
         assert not any([self.example_processor1_was_called, self.example_processor2_was_called])
-        the_event = Event(
-            EventType='Foo'
-        )
+        the_event = EventFactory(EventType='Foo')
 
         # WHEN the registry processes the event
         await reg.async_process_event(the_event)
@@ -159,5 +155,3 @@ class TestEventRouter:
         # THEN the processors should have been passed the event and ran
         assert self.example_processor1_was_called
         assert self.example_processor2_was_called
-
-
