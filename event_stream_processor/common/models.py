@@ -45,3 +45,12 @@ class Event(pydantic.BaseModel):
 
     def __str__(self):
         return f"{self.__class__.__name__}(EventType='{self.EventType}')"
+
+    def __eq__(self, other):
+        requirements_met = (
+            self.EventType == other.EventType,
+            self.EventID == other.EventID,
+            self.EventTimestampUTC == other.EventTimestampUTC,
+            getattr(self, "EventData") == getattr(other, "EventData"),
+        )
+        return all(requirements_met)

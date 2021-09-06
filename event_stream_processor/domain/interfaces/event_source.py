@@ -1,5 +1,5 @@
 import abc
-from typing import Iterator, Any, Optional
+from typing import Iterator, Optional
 
 from event_stream_processor.common.models import Event
 
@@ -15,6 +15,7 @@ class IEventSource:
 
     def __enter__(self):
         self.connect_to_source()
+        return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close_connection()

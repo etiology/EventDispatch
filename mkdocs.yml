@@ -1,7 +1,7 @@
 
 docs_dir: "./.docs/templates"
 site_dir: "./.docs/output/"
-site_name: "Event Stream Processor"
+site_name: "Event Processor Registry"
 site_url: "http://localhost:8000"
 site_description: "Register functions to be passed events from a queue"
 
