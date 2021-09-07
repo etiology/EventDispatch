@@ -1,17 +1,14 @@
-from functools import wraps
 from typing import Optional, List, Union, Dict, Any
-from unittest.mock import MagicMock
 
 import pytest
-from confluent_kafka import Message
 
-from event_stream_processor.infrastructure.kafka_event_source import KafkaConfig
+from event_stream_processor.infrastructure import kafka_event_source
 
 
 @pytest.fixture(scope="session")
-def kafka_config() -> KafkaConfig:
+def kafka_config() -> kafka_event_source.KafkaConfig:
     """ a test config for the KafkaEventSource interface """
-    return KafkaConfig(
+    return kafka_event_source.KafkaConfig(
         bootstrap_servers="169.254.20.21:9092",
         group_id="pytest",
         auto_offset_reset="earliest",
@@ -70,4 +67,16 @@ def kafka_consumer(kafka_config):
             """ testing method where we can preload some fake data """
             msg_bytes = msg if isinstance(msg, bytes) else msg.encode('utf8')
             self.mock_queue.append(msg_bytes)
+
     return MockConsumer
+
+
+@pytest.fixture(scope="function")
+def mock_kafka_source(kafka_config, kafka_consumer, monkeypatch):
+    """ returns a mocked KafkaEventSource instance """
+    monkeypatch.setattr(
+        target=kafka_event_source,
+        name='Consumer',
+        value=kafka_consumer
+    )
+    return kafka_event_source.KafkaEventSource(kafka_config)

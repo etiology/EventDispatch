@@ -13,13 +13,13 @@ from loguru import logger
 
 from event_stream_processor.common.models import Event
 from event_stream_processor.exceptions import (
-    BadProcessorRegistration,
+    BadProcessorRegistrationError,
 )
 
 
-class EventRouter:
+class EventDispatcher:
     """
-    Methods and functions can be added to the EventRouter via the `register_async_processor`
+    Methods and functions can be added to the EventDispatcher via the `register_async_processor`
     decorator.  When an event is processed by the router, all of the processors
     assigned to that event type will be passed the event to process.
 
@@ -27,52 +27,66 @@ class EventRouter:
         Assign events to functions using a decorator:
         ```python
 
-        event_router = EventRouter()
+        dispatcher = EventDispatcher()
 
         # register `reserve_product_inventory` to the `OrderPlaced` event type
-        @event_router.register_async_processor("OrderPlaced")
+        @dispatcher.register_async_processor("OrderPlaced")
         async def reserve_product_inventory(event):
             # ...
 
         # register `create_shipping_order` to the `ReadyToShip` event type
-        @event_router.register_async_processor("ReadyToShip")
+        @dispatcher.register_async_processor("ReadyToShip")
         async def create_shipping_order(event):
             # ...
 
         # register `send_customer_shipment_receipt` to the `ItemShipped` event type
-        @event_router.register_async_processor("ItemShipped")
+        @dispatcher.register_async_processor("ItemShipped")
         def send_customer_shipment_receipt(event):
             # ...
-
-        # ... pass events into the event_router
-        for event in event_stream.read():
-            await event_router.async_process_event(event)
         ```
 
         Assign events to a method of a class:
         ```python
 
-        class MyEventHandler:
+        class MyMerchExample:
             def __init__(self):
                 # ... perhaps this class needs to be
                 # initialized before handling events
                 ...
 
-            async def handle_event(self, event):
+            async def reserve_product_inventory(self, event):
                 ...
 
-        my_handler = MyEventHandler(...)
-        event_router = EventRouter()
+            async def create_shipping_order(self, event):
+                ...
 
-        # Here we register the method that handles the 'ItemShipped' event
-        event_router.register_async_processor("ItemShipped", my_handler.handle_event)
+            async def send_customer_shipment_receipt(self, event):
+                ...
+
+        merch = MyMerchExample(...)
+        dispatcher = EventDispatcher()
+        dispatcher.register_async_processor("OrderPlaced", merch.reserve_product_inventory)
+        dispatcher.register_async_processor("ReadyToShip", merch.create_shipping_order)
+        dispatcher.register_async_processor("ItemShipped", merch.send_customer_shipment_receipt)
 
         ```
 
+        Dispatching events to the registered handlers can be done by calling
+        the `async_process_event()` method and passing in the event to process:
+        ```python
+
+        # ... pass events into the dispatcher
+        for event in event_stream.read():
+            await dispatcher.async_process_event(event)
+        ```
     """
 
     def __init__(self):
         self.event_processors = defaultdict(list)
+
+    @property
+    def is_empty(self) -> bool:
+        return not bool(self.event_processors)
 
     def register_async_processor(
         self, event_type: str, method: callable = None
@@ -104,7 +118,7 @@ class EventRouter:
                 def wrapper(*args, **kwargs):
                     return fn(*args, **kwargs)
 
-                with BadProcessorRegistration.check_expressions(
+                with BadProcessorRegistrationError.check_expressions(
                     "event processor"
                 ) as check:
                     check(inspect.iscoroutinefunction(fn), "needs to be a coroutine"),
