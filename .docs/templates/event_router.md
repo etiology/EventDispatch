@@ -5,7 +5,7 @@ to specific event types.  Registered functions will be passed their
 subscribed events as they occur.  The router requires that all functions
 registered to events be asynchronous.
 
-::: event_stream_processor.domain.entities.event_router.EventRouter
+::: event_stream_processor.domain.entities.dispatcher.EventDispatcher
     rendering:
         heading_level: 1 
         show_object_full_path: False

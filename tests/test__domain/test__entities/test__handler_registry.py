@@ -1,19 +1,19 @@
 import pytest
 
 from event_stream_processor.common.models import Event
-from event_stream_processor.domain.entities.dispatcher import EventDispatcher
+from event_stream_processor.domain.entities.handler_registry import HandlerRegistry
 from event_stream_processor.exceptions import BadProcessorRegistrationError
 from tests.support_factories.event_factory import EventFactory
 
 
-class TestEventDispatcher:
+class TestHandlerRegistry:
 
     @pytest.fixture(autouse=True)
     def setup(self):
         self.example_processor1_was_called = False
         self.example_processor2_was_called = False
 
-    def _register_example_fn_processor1(self, reg: EventDispatcher, event_type: str, err=None):
+    def _register_example_fn_processor1(self, reg: HandlerRegistry, event_type: str, err=None):
         """ adds a test event processor to the registry """
 
         @reg.register_async_processor(event_type)
@@ -22,7 +22,7 @@ class TestEventDispatcher:
             if err:
                 raise err
 
-    def _register_example_fn_processor2(self, reg: EventDispatcher, event_type: str, err=None):
+    def _register_example_fn_processor2(self, reg: HandlerRegistry, event_type: str, err=None):
         """ adds a test event processor to the registry """
 
         @reg.register_async_processor(event_type)
@@ -32,8 +32,8 @@ class TestEventDispatcher:
                 raise err
 
     def test__event_processor_registry__create_empty(self):
-        # WHEN we instantiate the EventDispatcher class
-        registry = EventDispatcher()
+        # WHEN we instantiate the HandlerRegistry class
+        registry = HandlerRegistry()
 
         # THEN we should receive an instance of the registry class
         assert registry
@@ -41,7 +41,7 @@ class TestEventDispatcher:
 
     def test__event_processor_registry__register_async_processing_function(self):
         # GIVEN we have an empty event registry
-        registry = EventDispatcher()
+        registry = HandlerRegistry()
         registry_started_empty = len(registry.event_processors) == 0
 
         # WHEN we register a coroutine to a specific event type
@@ -49,7 +49,7 @@ class TestEventDispatcher:
         async def processing_method(event):
             pass
 
-        # THEN the registry should include this method in it's event type mapping
+        # THEN the registry should include this method in it's EventType mapping
         event_type_has_assigned_processors = registry.event_processors["SomeEventType"]
 
         assert registry_started_empty
@@ -58,8 +58,8 @@ class TestEventDispatcher:
 
     def test__event_processor_registry__register_async_processing_function__requires_event_as_parameter(self):
         # GIVEN we have an empty event registry
-        registry = EventDispatcher()
-        registry_started_empty = len(registry.event_processors) == 0
+        registry = HandlerRegistry()
+        assert not len(registry.event_processors)
 
         with pytest.raises(BadProcessorRegistrationError, match=r".*needs to accept an 'event' as a parameter.*"):
             # WHEN we register a coroutine to that does not accept an event as a parameter
@@ -70,8 +70,8 @@ class TestEventDispatcher:
 
     def test__event_processor_registry__register_async_processing_function__raises_on_non_async_function(self):
         # GIVEN we have an empty event registry
-        registry = EventDispatcher()
-        registry_started_empty = len(registry.event_processors) == 0
+        registry = HandlerRegistry()
+        assert not len(registry.event_processors)
 
         with pytest.raises(BadProcessorRegistrationError, match=r".*coroutine.*"):
             # WHEN we register a non async function to a specific event type
@@ -82,8 +82,8 @@ class TestEventDispatcher:
 
     @pytest.mark.asyncio
     async def test__event_processor_registry__async_process_event__considers_event_type(self, event_loop):
-        # GIVEN a registry with event processors
-        reg = EventDispatcher()
+        # GIVEN a registry with event handler
+        reg = HandlerRegistry()
         self._register_example_fn_processor1(reg=reg, event_type='Foo')
         self._register_example_fn_processor2(reg=reg, event_type='Other')
         assert not any([self.example_processor1_was_called, self.example_processor2_was_called])
@@ -92,14 +92,14 @@ class TestEventDispatcher:
         # WHEN the registry processes the event
         await reg.async_process_event(the_event)
 
-        # THEN the processor 1 should have been passed the event
+        # THEN the handler 1 should have been passed the event
         assert self.example_processor1_was_called
         assert not self.example_processor2_was_called
 
     @pytest.mark.asyncio
     async def test__event_processor_registry__async_process_event__multiple_processor_functions(self, event_loop):
         # GIVEN a registry with two registered event processors
-        reg = EventDispatcher()
+        reg = HandlerRegistry()
         self._register_example_fn_processor1(reg=reg, event_type='Foo')
         self._register_example_fn_processor2(reg=reg, event_type='Foo')
         assert not any([self.example_processor1_was_called, self.example_processor2_was_called])
@@ -108,14 +108,14 @@ class TestEventDispatcher:
         # WHEN the registry processes the event
         await reg.async_process_event(the_event)
 
-        # THEN the processors should have been passed the event and ran
+        # THEN the handler should have been passed the event and ran
         assert self.example_processor1_was_called
         assert self.example_processor2_was_called
 
     @pytest.mark.asyncio
     async def test__event_processor_registry__async_process_event__multiple_processor_functions(self, event_loop):
-        # GIVEN classes with registered methods as event processors
-        reg = EventDispatcher()
+        # GIVEN classes with registered methods as event handler
+        reg = HandlerRegistry()
 
         class Base:
             def __init__(self):
@@ -139,13 +139,13 @@ class TestEventDispatcher:
         # WHEN the registry processes the event
         await reg.async_process_event(the_event)
 
-        # THEN the processors should have been passed the event and ran
+        # THEN the handler should have been passed the event and ran
         assert eg1.method_called
 
     @pytest.mark.asyncio
     async def test__event_processor_registry__async_process_event__no_interrupt_from_processor_error(self, event_loop):
-        # GIVEN a registry with event processors
-        reg = EventDispatcher()
+        # GIVEN a registry with event handler
+        reg = HandlerRegistry()
         self._register_example_fn_processor1(reg=reg, event_type='Foo')
         self._register_example_fn_processor2(reg=reg, event_type='Foo', err=ValueError)
         assert not any([self.example_processor1_was_called, self.example_processor2_was_called])
@@ -154,6 +154,6 @@ class TestEventDispatcher:
         # WHEN the registry processes the event
         await reg.async_process_event(the_event)
 
-        # THEN the processors should have been passed the event and ran
+        # THEN the handler should have been passed the event and ran
         assert self.example_processor1_was_called
         assert self.example_processor2_was_called

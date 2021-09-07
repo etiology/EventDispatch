@@ -14,6 +14,7 @@ theme:
   name: "material"
 
 plugins:
+  - mermaid2
   - mkdocstrings:
       watch:
         - event_stream_processor
@@ -22,3 +23,5 @@ plugins:
           setup_commands:
             - import sys
             - sys.path.append("event_stream_processor")
+
+

@@ -1,9 +1,3 @@
-"""
-# Event Registry
-
-Register methods and functions to be called when a specific event is received
-
-"""
 import asyncio
 import inspect
 from collections import defaultdict
@@ -17,9 +11,9 @@ from event_stream_processor.exceptions import (
 )
 
 
-class EventDispatcher:
+class HandlerRegistry:
     """
-    Methods and functions can be added to the EventDispatcher via the `register_async_processor`
+    Methods and functions can be added to the HandlerRegistry via the `register_async_processor`
     decorator.  When an event is processed by the router, all of the processors
     assigned to that event type will be passed the event to process.
 
@@ -27,20 +21,20 @@ class EventDispatcher:
         Assign events to functions using a decorator:
         ```python
 
-        dispatcher = EventDispatcher()
+        handler_registry = HandlerRegistry()
 
         # register `reserve_product_inventory` to the `OrderPlaced` event type
-        @dispatcher.register_async_processor("OrderPlaced")
+        @handler_registry.register_async_processor("OrderPlaced")
         async def reserve_product_inventory(event):
             # ...
 
         # register `create_shipping_order` to the `ReadyToShip` event type
-        @dispatcher.register_async_processor("ReadyToShip")
+        @handler_registry.register_async_processor("ReadyToShip")
         async def create_shipping_order(event):
             # ...
 
         # register `send_customer_shipment_receipt` to the `ItemShipped` event type
-        @dispatcher.register_async_processor("ItemShipped")
+        @handler_registry.register_async_processor("ItemShipped")
         def send_customer_shipment_receipt(event):
             # ...
         ```
@@ -64,20 +58,20 @@ class EventDispatcher:
                 ...
 
         merch = MyMerchExample(...)
-        dispatcher = EventDispatcher()
-        dispatcher.register_async_processor("OrderPlaced", merch.reserve_product_inventory)
-        dispatcher.register_async_processor("ReadyToShip", merch.create_shipping_order)
-        dispatcher.register_async_processor("ItemShipped", merch.send_customer_shipment_receipt)
+        handler_registry = HandlerRegistry()
+        handler_registry.register_async_processor("OrderPlaced", merch.reserve_product_inventory)
+        handler_registry.register_async_processor("ReadyToShip", merch.create_shipping_order)
+        handler_registry.register_async_processor("ItemShipped", merch.send_customer_shipment_receipt)
 
         ```
 
-        Dispatching events to the registered handlers can be done by calling
+        Sending the events to the registered handlers can be done by calling
         the `async_process_event()` method and passing in the event to process:
         ```python
 
-        # ... pass events into the dispatcher
+        # ... send events into the registered handlers
         for event in event_stream.read():
-            await dispatcher.async_process_event(event)
+            await handler_registry.async_process_event(event)
         ```
     """
 

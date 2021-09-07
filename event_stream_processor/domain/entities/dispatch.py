@@ -5,15 +5,15 @@ import signal
 from loguru import logger
 
 from event_stream_processor.common.models import Event
-from event_stream_processor.domain.entities.dispatcher import EventDispatcher
+from event_stream_processor.domain.entities.handler_registry import HandlerRegistry
 from event_stream_processor.domain.interfaces.event_source import IEventSource
 from event_stream_processor.exceptions import EmptyDispatcherError
 
 
-class EventRunner:
+class Dispatcher:
     """ Processes events from a source by passing them to registered handlers """
 
-    def __init__(self, dispatcher: EventDispatcher, event_source: IEventSource):
+    def __init__(self, dispatcher: HandlerRegistry, event_source: IEventSource):
         EmptyDispatcherError.require_condition(
             message="Dispatcher has no registered event handlers",
             expr=not dispatcher.is_empty,

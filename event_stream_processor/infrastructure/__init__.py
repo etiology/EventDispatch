@@ -9,9 +9,7 @@ interface module should contain it's own configuration class
 """
 import importlib
 
-__all__ = [
-
-]
+__all__ = []
 # todo - does this lazy load?  why is __all__ empty?
 
 
