@@ -1,3 +1,6 @@
+![Python](https://img.shields.io/badge/Python-3.9-green?style=flat)
+
+
 # Event Dispatcher
 
 The [Event Source Pattern](https://docs.microsoft.com/en-us/azure/architecture/patterns/event-sourcing)
