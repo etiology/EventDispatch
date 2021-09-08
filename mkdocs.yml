@@ -3,6 +3,7 @@ docs_dir: "./.docs/templates"
 site_dir: "./.docs/output/"
 site_name: "Event Processor Registry"
 site_url: "http://localhost:8000"
+repo_url: "https://github.com/etiology/Event-Dispatch"
 site_description: "Register functions to be passed events from a queue"
 
 nav:
@@ -17,8 +18,10 @@ nav:
 theme:
   name: "material"
 
+
 plugins:
   - mermaid2
+  - search
   - mkdocstrings:
       watch:
         - event_stream_processor
