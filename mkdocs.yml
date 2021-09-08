@@ -7,7 +7,11 @@ site_description: "Register functions to be passed events from a queue"
 
 nav:
   - Introduction: 'index.md'
-  - Registry: 'event_router.md'
+  - Dispatcher: 'dispatcher.md'
+  - Registry: 'handler_registry.md'
+  - EventSources:
+      Overview: 'EventSources/event_source_overview.md'
+      KafkaEventSource: 'EventSources/kafka_source.md'
 
 
 theme:
@@ -25,3 +29,5 @@ plugins:
             - sys.path.append("event_stream_processor")
 
 
+extra_javascript:
+    - https://unpkg.com/mermaid/dist/mermaid.min.js

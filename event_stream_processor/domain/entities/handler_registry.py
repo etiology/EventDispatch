@@ -80,6 +80,7 @@ class HandlerRegistry:
 
     @property
     def is_empty(self) -> bool:
+        """ returns true if the registry is empty """
         return not bool(self.event_processors)
 
     def register_async_processor(

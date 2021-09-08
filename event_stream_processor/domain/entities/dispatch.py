@@ -7,20 +7,20 @@ from loguru import logger
 from event_stream_processor.common.models import Event
 from event_stream_processor.domain.entities.handler_registry import HandlerRegistry
 from event_stream_processor.domain.interfaces.event_source import IEventSource
-from event_stream_processor.exceptions import EmptyDispatcherError
+from event_stream_processor.exceptions import EmptyRegistryError
 
 
 class Dispatcher:
-    """ Processes events from a source by passing them to registered handlers """
+    """ Processes events from a source by passing them to registered event handlers """
 
-    def __init__(self, dispatcher: HandlerRegistry, event_source: IEventSource):
-        EmptyDispatcherError.require_condition(
-            message="Dispatcher has no registered event handlers",
-            expr=not dispatcher.is_empty,
+    def __init__(self, registry: HandlerRegistry, event_source: IEventSource):
+        EmptyRegistryError.require_condition(
+            message="Handler Registry is empty",
+            expr=not registry.is_empty,
         )
-        self.dispatcher = dispatcher
+        self.registry = registry
         self.event_source = event_source
-        self.shutdown_flag_is_set = False
+        self._shutdown_flag_is_set = False
 
     def __str__(self):
         return f"{self.__class__.__name__}"
@@ -37,15 +37,15 @@ class Dispatcher:
 
     def _stop_async_loop(self, signame, loop):
         logger.warning(f"Received {signame} signal - {self} is shutting down")
-        self.shutdown_flag_is_set = True
+        self._shutdown_flag_is_set = True
 
     async def _send_to_dispatchers(self, event: Event, sleep_interval=0):
-        """ asynchronously process the event via the dispatcher """
+        """ asynchronously process the event via the registry """
         loop = asyncio.get_event_loop()
         self._set_loop_stop_signals(loop=loop)
 
         dispatch = asyncio.gather(
-            functools.partial(self.dispatcher.async_process_event, event=event)()
+            functools.partial(self.registry.async_process_event, event=event)()
         )
         loop.run_until_complete(dispatch)
         await asyncio.sleep(sleep_interval)
@@ -59,7 +59,7 @@ class Dispatcher:
                     continue
 
                 await self._send_to_dispatchers(event=event)
-                if self.shutdown_flag_is_set:
+                if self._shutdown_flag_is_set:
                     print("Shutting down")
                     break
         logger.info(f"{self.__class__.__name__}.run() - exited due to stop call")

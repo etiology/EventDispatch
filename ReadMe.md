@@ -1,5 +1,7 @@
 
 
+# todo - add instructions on how to setup poetry and install project
+
 
 ## Development Notes
 

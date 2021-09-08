@@ -7,7 +7,7 @@ class BadProcessorRegistrationError(Buzz):
     pass
 
 
-class EmptyDispatcherError(Buzz):
-    """ The event dispatcher is empty and can not be used """
+class EmptyRegistryError(Buzz):
+    """ The event registry is empty and can not be used """
 
     pass

@@ -12,16 +12,16 @@ class TestDispatcher:
         self.dispatcher = HandlerRegistry()
 
     def test__event_runner__create_instance(self):
-        # GIVEN we have a loaded dispatcher and event source
+        # GIVEN we have a loaded registry and event source
         self.dispatcher.register_async_processor("SampleEventType", lambda e: print(e))
         assert self.event_source
 
         # WHEN we instantiate the Dispatcher class
-        runner = Dispatcher(dispatcher=self.dispatcher, event_source=self.event_source)
+        runner = Dispatcher(registry=self.dispatcher, event_source=self.event_source)
 
         # THEN we should receive an new runner instance with our dependencies present
         assert runner
         assert runner.event_source
-        assert runner.dispatcher
+        assert runner.registry
 
 
