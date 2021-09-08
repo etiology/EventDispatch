@@ -1,0 +1,434 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Register functions to be passed events from a queue" name="description"/>
+<link href="http://localhost:8000/handler_registry/" rel="canonical"/>
+<link href="../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.2.2, mkdocs-material-7.2.6" name="generator"/>
+<title>Registry - Event Processor Registry</title>
+<link href="../assets/stylesheets/main.802231af.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+<link href="../assets/_mkdocstrings.css" rel="stylesheet"/>
+</head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
+<script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#handler-registry">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Event Processor Registry" class="md-header__button md-logo" data-md-component="logo" href=".." title="Event Processor Registry">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Event Processor Registry
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Registry
+            
+          </span>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Event Processor Registry" class="md-nav__button md-logo" data-md-component="logo" href=".." title="Event Processor Registry">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+    Event Processor Registry
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="..">
+        Introduction
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../dispatcher/">
+        Dispatcher
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<a class="md-nav__link md-nav__link--active" href="./">
+        Registry
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4">
+        EventSources
+        <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="EventSources" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+          EventSources
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../EventSources/event_source_overview/">
+        Overview
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../EventSources/kafka_source/">
+        KafkaEventSource
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="handler-registry">Handler Registry</h1>
+<p>The <strong>HandlerRegistry</strong> class provides a mechanism for assigning functions
+to specific event types.  Registered functions will be passed their
+subscribed events as they occur.  The router requires that all functions
+registered to events be asynchronous.</p>
+<hr/>
+<div class="doc doc-object doc-module">
+<a id="event_stream_processor.domain.entities.handler_registry"></a>
+<div class="doc doc-contents first">
+<div class="doc doc-children">
+<h1 id="event_stream_processor.domain.entities.handler_registry-classes">Classes</h1>
+<div class="doc doc-object doc-class">
+<h2 class="doc doc-heading" id="event_stream_processor.domain.entities.handler_registry.HandlerRegistry">
+<code>HandlerRegistry</code>
+</h2>
+<div class="doc doc-contents">
+<p>Methods and functions can be added to the HandlerRegistry via the <code>register_async_processor</code>
+decorator.  When an event is processed by the router, all of the processors
+assigned to that event type will be passed the event to process.</p>
+<p><strong>Examples:</strong></p>
+<p>Assign events to functions using a decorator:</p>
+<pre><code class="language-python">
+handler_registry = HandlerRegistry()
+
+# register `reserve_product_inventory` to the `OrderPlaced` event type
+@handler_registry.register_async_processor("OrderPlaced")
+async def reserve_product_inventory(event):
+    # ...
+
+# register `create_shipping_order` to the `ReadyToShip` event type
+@handler_registry.register_async_processor("ReadyToShip")
+async def create_shipping_order(event):
+    # ...
+
+# register `send_customer_shipment_receipt` to the `ItemShipped` event type
+@handler_registry.register_async_processor("ItemShipped")
+def send_customer_shipment_receipt(event):
+    # ...
+</code></pre>
+<p>Assign events to a method of a class:</p>
+<pre><code class="language-python">
+class MyMerchExample:
+    def __init__(self):
+        # ... perhaps this class needs to be
+        # initialized before handling events
+        ...
+
+    async def reserve_product_inventory(self, event):
+        ...
+
+    async def create_shipping_order(self, event):
+        ...
+
+    async def send_customer_shipment_receipt(self, event):
+        ...
+
+merch = MyMerchExample(...)
+handler_registry = HandlerRegistry()
+handler_registry.register_async_processor("OrderPlaced", merch.reserve_product_inventory)
+handler_registry.register_async_processor("ReadyToShip", merch.create_shipping_order)
+handler_registry.register_async_processor("ItemShipped", merch.send_customer_shipment_receipt)
+
+</code></pre>
+<p>Sending the events to the registered handlers can be done by calling
+the <code>async_process_event()</code> method and passing in the event to process:</p>
+<pre><code class="language-python">
+# ... send events into the registered handlers
+for event in event_stream.read():
+    await handler_registry.async_process_event(event)
+</code></pre>
+<div class="doc doc-children">
+<h3 id="event_stream_processor.domain.entities.handler_registry.HandlerRegistry-attributes">Attributes</h3>
+<div class="doc doc-object doc-attribute">
+<h4 class="doc doc-heading" id="event_stream_processor.domain.entities.handler_registry.HandlerRegistry.is_empty">
+<code class="highlight language-python"><span class="n">is_empty</span><span class="p">:</span> <span class="nb">bool</span></code>
+<span class="doc doc-properties">
+<small class="doc doc-property doc-property-property"><code>property</code></small>
+<small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+</span>
+</h4>
+<div class="doc doc-contents">
+<p>returns true if the registry is empty </p>
+</div>
+</div>
+<h3 id="event_stream_processor.domain.entities.handler_registry.HandlerRegistry-methods">Methods</h3>
+<div class="doc doc-object doc-method">
+<h4 class="doc doc-heading" id="event_stream_processor.domain.entities.handler_registry.HandlerRegistry.async_process_event">
+<code class="highlight language-python"><span class="n">async_process_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span></code>
+<span class="doc doc-properties">
+<small class="doc doc-property doc-property-async"><code>async</code></small>
+</span>
+</h4>
+<div class="doc doc-contents">
+<p>Run all processors registered to this type of event</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>event</code></td>
+<td><code>Event</code></td>
+<td><p>The data to pass to the registered event processors</p></td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>timeout</code></td>
+<td><code>float</code></td>
+<td><p>Maximum time in seconds that an event processor is allowed to run</p></td>
+<td><code>2.0</code></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>event_stream_processor/domain/entities/handler_registry.py</code></summary>
+<div class="highlight"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">async_process_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">Event</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">"""Run all processors registered to this type of event</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        event: The data to pass to the registered event processors</span>
+<span class="sd">        timeout: Maximum time in seconds that an event processor is allowed to run</span>
+
+<span class="sd">    """</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Processing - </span><span class="si">{</span><span class="n">event</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">event_processing_coroutines</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">asyncio</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span><span class="n">registered_processor</span><span class="p">(</span><span class="n">event</span><span class="p">),</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">registered_processor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_processors</span><span class="p">[</span><span class="n">event</span><span class="o">.</span><span class="n">EventType</span><span class="p">]</span>
+    <span class="p">]</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
+        <span class="o">*</span><span class="n">event_processing_coroutines</span><span class="p">,</span> <span class="n">return_exceptions</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Log any failures from the event processors</span>
+    <span class="n">err_results</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">err_results</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"async_process_event - uncaught error from an event processor: </span><span class="si">{</span><span class="n">err_results</span><span class="si">}</span><span class="s2">"</span>
+        <span class="p">)</span>
+</code></pre></div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h4 class="doc doc-heading" id="event_stream_processor.domain.entities.handler_registry.HandlerRegistry.register_async_processor">
+<code class="highlight language-python"><span class="n">register_async_processor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_type</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+</h4>
+<div class="doc doc-contents">
+<p>A Decorator that registers an async function for specific even type</p>
+<p>The event stream consists of message that contain an 'EventType' identifier.  This
+decorator is used to ensure the function is passed these events when they occur in
+the stream.</p>
+<p>!!! notes
+    An event processor function needs to accept an Event model as an argument</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>event_type</code></td>
+<td><code>str</code></td>
+<td><p>case-insensitive event_type that the decorated function will receive</p></td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>method</code></td>
+<td><code>&lt;built-in function callable&gt;</code></td>
+<td><p>(Optional) Used if the callable being registered is a method on a class</p></td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;built-in function callable&gt;</code></td>
+<td><p>callable</p></td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>event_stream_processor/domain/entities/handler_registry.py</code></summary>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">register_async_processor</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">event_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="n">callable</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">callable</span><span class="p">:</span>
+    <span class="sd">"""A Decorator that registers an async function for specific even type</span>
+
+<span class="sd">    The event stream consists of message that contain an 'EventType' identifier.  This</span>
+<span class="sd">    decorator is used to ensure the function is passed these events when they occur in</span>
+<span class="sd">    the stream.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        An event processor function needs to accept an Event model as an argument</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        event_type: case-insensitive event_type that the decorated function will receive</span>
+<span class="sd">        method: (Optional) Used if the callable being registered is a method on a class</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        callable</span>
+<span class="sd">    """</span>
+
+    <span class="k">if</span> <span class="n">method</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_processors</span><span class="p">[</span><span class="n">event_type</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">method</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># when decorating a function</span>
+        <span class="k">def</span> <span class="nf">decorated</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+            <span class="nd">@wraps</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+            <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="k">with</span> <span class="n">BadProcessorRegistrationError</span><span class="o">.</span><span class="n">check_expressions</span><span class="p">(</span>
+                <span class="s2">"event processor"</span>
+            <span class="p">)</span> <span class="k">as</span> <span class="n">check</span><span class="p">:</span>
+                <span class="n">check</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">iscoroutinefunction</span><span class="p">(</span><span class="n">fn</span><span class="p">),</span> <span class="s2">"needs to be a coroutine"</span><span class="p">),</span>
+                <span class="n">check</span><span class="p">(</span>
+                    <span class="s2">"event"</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span>
+                    <span class="s2">"needs to accept an 'event' as a parameter"</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">event_processors</span><span class="p">[</span><span class="n">event_type</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">wrapper</span>
+
+        <span class="k">return</span> <span class="n">decorated</span>
+</code></pre></div>
+</details>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Dispatcher" class="md-footer__link md-footer__link--prev" href="../dispatcher/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Dispatcher
+            </div>
+</div>
+</a>
+<a aria-label="Next: Overview" class="md-footer__link md-footer__link--next" href="../EventSources/event_source_overview/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Overview
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+          Material for MkDocs
+        </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+<script src="../assets/javascripts/bundle.756773cc.min.js"></script>
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</body>
+</html>

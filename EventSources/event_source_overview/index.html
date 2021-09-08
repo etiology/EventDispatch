@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Register functions to be passed events from a queue" name="description"/>
+<link href="http://localhost:8000/EventSources/event_source_overview/" rel="canonical"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.2.2, mkdocs-material-7.2.6" name="generator"/>
+<title>Overview - Event Processor Registry</title>
+<link href="../../assets/stylesheets/main.802231af.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.3f5d1f46.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+<link href="../../assets/_mkdocstrings.css" rel="stylesheet"/>
+</head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
+<script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#event-sources">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Event Processor Registry" class="md-header__button md-logo" data-md-component="logo" href="../.." title="Event Processor Registry">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Event Processor Registry
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Overview
+            
+          </span>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Event Processor Registry" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="Event Processor Registry">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
+</a>
+    Event Processor Registry
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+        Introduction
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../dispatcher/">
+        Dispatcher
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../handler_registry/">
+        Registry
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4">
+        EventSources
+        <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="EventSources" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+          EventSources
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<a class="md-nav__link md-nav__link--active" href="./">
+        Overview
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../kafka_source/">
+        KafkaEventSource
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="event-sources">Event Sources</h1>
+<p>The dispatch system is agnostic to where the event data comes 
+from so long as the source is a subclass of <code>IEventSource</code>.<br/>
+The <code>IEventSource</code> class provides a common interface that is 
+used when dispatching events to handlers.  The <code>IEventSource</code>
+provides setup and teardown mechanics through a context manager.</p>
+<div class="mermaid">classDiagram
+
+class IEventSource {
+    +str cls_name
+    +connect_to_source()
+    +get_event()
+    +close_connection()
+}
+
+class KafkaSource {
+    +KafkaConfig config
+}
+
+class CustomSourceA {
+    +CustomConfig config
+}
+
+class CustomSourceB {
+    +CustomConfig config
+}
+
+class CustomSourceC {
+    +CustomConfig config
+}
+
+
+IEventSource &lt;|-- KafkaSource
+IEventSource &lt;|-- CustomSourceA
+IEventSource &lt;|-- CustomSourceB
+IEventSource &lt;|-- CustomSourceC
+
+</div>
+<hr/>
+<div class="doc doc-object doc-module">
+<a id="event_stream_processor.domain.interfaces.event_source"></a>
+<div class="doc doc-contents first">
+<div class="doc doc-children">
+<h1 id="event_stream_processor.domain.interfaces.event_source-classes">Classes</h1>
+<div class="doc doc-object doc-class">
+<h2 class="doc doc-heading" id="event_stream_processor.domain.interfaces.event_source.IEventSource">
+<code>IEventSource</code>
+</h2>
+<div class="doc doc-contents">
+<p>Interface class to accessing event data </p>
+<div class="doc doc-children">
+<h3 id="event_stream_processor.domain.interfaces.event_source.IEventSource-methods">Methods</h3>
+<div class="doc doc-object doc-method">
+<h4 class="doc doc-heading" id="event_stream_processor.domain.interfaces.event_source.IEventSource.close_connection">
+<code class="highlight language-python"><span class="n">close_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+</h4>
+<div class="doc doc-contents">
+<p>clean up any connections to the event source </p>
+<details class="quote">
+<summary>Source code in <code>event_stream_processor/domain/interfaces/event_source.py</code></summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+<span class="k">def</span> <span class="nf">close_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">""" clean up any connections to the event source """</span>
+    <span class="o">...</span>
+</code></pre></div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h4 class="doc doc-heading" id="event_stream_processor.domain.interfaces.event_source.IEventSource.connect_to_source">
+<code class="highlight language-python"><span class="n">connect_to_source</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+</h4>
+<div class="doc doc-contents">
+<p>prepare to read events from a source </p>
+<details class="quote">
+<summary>Source code in <code>event_stream_processor/domain/interfaces/event_source.py</code></summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+<span class="k">def</span> <span class="nf">connect_to_source</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">""" prepare to read events from a source """</span>
+    <span class="o">...</span>
+</code></pre></div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-method">
+<h4 class="doc doc-heading" id="event_stream_processor.domain.interfaces.event_source.IEventSource.get_event">
+<code class="highlight language-python"><span class="n">get_event</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+</h4>
+<div class="doc doc-contents">
+<p>fetch an event from the source </p>
+<details class="quote">
+<summary>Source code in <code>event_stream_processor/domain/interfaces/event_source.py</code></summary>
+<div class="highlight"><pre><span></span><code><span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+<span class="k">def</span> <span class="nf">get_event</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Event</span><span class="p">]:</span>
+    <span class="sd">""" fetch an event from the source """</span>
+    <span class="o">...</span>
+</code></pre></div>
+</details>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Registry" class="md-footer__link md-footer__link--prev" href="../../handler_registry/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Registry
+            </div>
+</div>
+</a>
+<a aria-label="Next: KafkaEventSource" class="md-footer__link md-footer__link--next" href="../kafka_source/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              KafkaEventSource
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+          Material for MkDocs
+        </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+<script src="../../assets/javascripts/bundle.756773cc.min.js"></script>
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({});</script></body>
+</html>
