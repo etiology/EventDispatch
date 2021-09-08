@@ -3,6 +3,8 @@
 
 # Event Dispatcher
 
+[API Documentation](https://etiology.github.io/Event-Dispatch/)
+
 The [Event Source Pattern](https://docs.microsoft.com/en-us/azure/architecture/patterns/event-sourcing)
 provides a way for applications to communicate to other systems through a series
 of events.  Each event contains state change data.  Downstream services can listen 
