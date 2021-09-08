@@ -13,6 +13,46 @@ to these events.  The dispatcher reads events from a source and then
 propagates them to registered callback functions.  
 
 
+## Usage Example
+
+```python
+
+from event_stream_processor import HandlerRegistry
+from event_stream_processor import Dispatcher
+from event_stream_processor import KafkaEventSource
+from event_stream_processor import KafkaConfig
+from event_stream_processor.common.models import Event
+
+
+# setup event handler registry
+handler_registry = HandlerRegistry()
+
+
+# register our event handler function
+@handler_registry.register_async_processor("OrderRequest")
+async def process_customer_orders(event: Event):
+    pass
+
+ 
+if __name__ == '__main__':
+    # start the dispatcher
+    kafka_config = KafkaConfig(
+        bootstrap_servers="127.0.0.1:9092",
+        group_id="example_group",
+        auto_offset_reset="earliest",
+        topic_pattern="event_dispatcher_demo",
+    )
+    runner = Dispatcher(
+        event_source=KafkaEventSource(config=kafka_config), 
+        registry=handler_registry
+    )
+    runner.run()
+
+
+```
+
+
+
 ----
 
 ## Development Notes
