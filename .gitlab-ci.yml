@@ -1,0 +1,25 @@
+
+
+
+
+stages:
+  - test
+  - build
+  - push
+  - deploy
+
+
+run tests:
+  stage: test
+  image: python3.8
+  script:
+    - poetry run pytest
+
+
+
+push:
+  stage: push
+  image: python3.8
+  script:
+    - docker tag "${CI_REGISTRY}:${CI_COMMIT_HASH}"
+
